@@ -5,6 +5,7 @@
   "main": "dist/main.js",
   "scripts": {
     "dev": "concurrently \"yarn tsc --watch\" \"nodemon -q dist/main.js\"",
+    "db:migrate": "ts-node src/migrations/migrate.ts",
     "test": "jest"
   },
   "repository": {

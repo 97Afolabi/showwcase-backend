@@ -7,9 +7,9 @@ Manage user's eductational background
    - [x] Server - Express
    - [x] Nodemon
    - [x] Dependency injection - inversify + inversify-express-utils
-   - [ ] Logging - Winston
-   - [ ] Database - PostgreSQL
-     - [ ] Database migration
+   - [x] Logging - Winston
+   - [x] Database - PostgreSQL
+     - [x] Database migration - manual✅, TypeORM
    - [ ] Caching - Redis
    - [ ] Queuing - Bull + Redis
    - [ ] Validation - Joi or Class validator
