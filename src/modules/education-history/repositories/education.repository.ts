@@ -76,6 +76,49 @@ export default class EducationRepository extends BaseRepository {
     }
   }
 
+  async update(userId: string, id: string, data: IEducation): Promise<void> {
+    try {
+      const {
+        school,
+        degree,
+        field,
+        start_date,
+        end_date,
+        grade,
+        description,
+      } = data;
+      await this.execute(
+        `UPDATE
+          public.education
+        SET
+          school = $1,
+          degree = $2,
+          field = $3,
+          start_date = $4,
+          end_date = $5,
+          grade = $6,
+          description = $7
+        WHERE
+          user_id = $8 AND
+          id = $9;`,
+        [
+          school,
+          degree,
+          field,
+          start_date,
+          end_date,
+          grade,
+          description,
+          userId,
+          id,
+        ]
+      );
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  }
+
   async delete(userId: string, id: string): Promise<void> {
     try {
       await this.execute(

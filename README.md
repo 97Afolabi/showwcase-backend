@@ -20,6 +20,6 @@ Manage user's eductational background
 - [ ] List names of schools attended
 - [x] List education history
 - [x] View history details
-- [ ] Update history
+- [x] Update history
 - [x] Delete history
 - [ ] Deploy to AWS

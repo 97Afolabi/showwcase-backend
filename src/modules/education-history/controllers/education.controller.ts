@@ -4,6 +4,7 @@ import {
   httpDelete,
   httpGet,
   httpPost,
+  httpPut,
 } from "inversify-express-utils";
 import { inject } from "inversify";
 import * as passport from "passport";
@@ -58,6 +59,16 @@ export class EducationController {
       req.params.id
     );
     return res.status(200).json({ message: "Education history", data });
+  }
+
+  @httpPut("/:id", ValidateUuid, ValidateEducation)
+  async update(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    await this.educationService.update(req["user"].id, req.params.id, req.body);
+    return res.status(200).json({ message: "Education history updated" });
   }
 
   @httpDelete("/:id", ValidateUuid)

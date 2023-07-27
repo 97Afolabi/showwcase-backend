@@ -36,6 +36,18 @@ export default class EducationService {
     }
   }
 
+  async update(userId: string, id: string, data: IEducation): Promise<void> {
+    try {
+      data.start_date = new Date(data.start_date).toDateString();
+      if (data.end_date) {
+        data.end_date = new Date(data.end_date).toDateString();
+      }
+      await this.educationRepository.update(userId, id, data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async delete(userId: string, id: string): Promise<void> {
     try {
       await this.educationRepository.delete(userId, id);
