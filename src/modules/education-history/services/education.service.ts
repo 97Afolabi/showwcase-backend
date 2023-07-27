@@ -35,4 +35,12 @@ export default class EducationService {
       console.error(error);
     }
   }
+
+  async delete(userId: string, id: string): Promise<void> {
+    try {
+      await this.educationRepository.delete(userId, id);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

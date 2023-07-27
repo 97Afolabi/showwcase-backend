@@ -18,8 +18,8 @@ Manage user's eductational background
 - [x] User authentication
 - [x] Add education history
 - [ ] List names of schools attended
-- [ ] List education history
-- [ ] View history details
+- [x] List education history
+- [x] View history details
 - [ ] Update history
-- [ ] Delete history
+- [x] Delete history
 - [ ] Deploy to AWS

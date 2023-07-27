@@ -1,5 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { controller, httpGet, httpPost } from "inversify-express-utils";
+import {
+  controller,
+  httpDelete,
+  httpGet,
+  httpPost,
+} from "inversify-express-utils";
 import { inject } from "inversify";
 import * as passport from "passport";
 import { TYPES } from "../../../config/types";
@@ -53,5 +58,15 @@ export class EducationController {
       req.params.id
     );
     return res.status(200).json({ message: "Education history", data });
+  }
+
+  @httpDelete("/:id", ValidateUuid)
+  async delete(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    await this.educationService.delete(req["user"].id, req.params.id);
+    return res.status(200).json({ message: "Education history deleted" });
   }
 }

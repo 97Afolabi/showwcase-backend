@@ -75,4 +75,21 @@ export default class EducationRepository extends BaseRepository {
       throw new Error(error);
     }
   }
+
+  async delete(userId: string, id: string): Promise<void> {
+    try {
+      await this.execute(
+        `DELETE
+        FROM
+          public.education
+        WHERE
+          user_id = $1 AND
+          id = $2;`,
+        [userId, id]
+      );
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  }
 }
