@@ -5,7 +5,7 @@ import * as passport from "passport";
 import { TYPES } from "../../../config/types";
 import AuthService from "../services/education.service";
 import EducationService from "../services/education.service";
-import { ValidateEducation } from "../../../common/validation";
+import { ValidateEducation, ValidateUuid } from "../../../common/validation";
 
 const jwtAuthMiddleware = passport.authenticate("jwt", {
   session: false,
@@ -39,6 +39,19 @@ export class EducationController {
     next: NextFunction
   ): Promise<Response> {
     const data = await this.educationService.findAll(req["user"].id);
+    return res.status(200).json({ message: "Education history", data });
+  }
+
+  @httpGet("/:id", ValidateUuid)
+  async findOne(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    const data = await this.educationService.findOne(
+      req["user"].id,
+      req.params.id
+    );
     return res.status(200).json({ message: "Education history", data });
   }
 }

@@ -57,4 +57,22 @@ export default class EducationRepository extends BaseRepository {
       throw new Error(error);
     }
   }
+
+  async findById(userId: string, id: string): Promise<IEducation> {
+    try {
+      return await this.findOne(
+        `SELECT
+          id, school, degree, field, start_date, end_date, grade, description, created_at, updated_at
+        FROM
+          public.education
+        WHERE
+          user_id = $1 AND
+          id = $2;`,
+        [userId, id]
+      );
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  }
 }

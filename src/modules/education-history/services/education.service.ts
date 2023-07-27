@@ -27,4 +27,12 @@ export default class EducationService {
       console.error(error);
     }
   }
+
+  async findOne(userId: string, id: string): Promise<IEducation> {
+    try {
+      return await this.educationRepository.findById(userId, id);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

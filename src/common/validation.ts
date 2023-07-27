@@ -33,6 +33,14 @@ export function ValidateEducation(
   validateRequestBody(schema, req, res, next);
 }
 
+export function ValidateUuid(req: Request, res: Response, next: NextFunction) {
+  const schema = Joi.object({
+    id: Joi.string().uuid().required(),
+  });
+
+  validateRequestBody(schema, req, res, next, "params");
+}
+
 function validateRequestBody(
   schema,
   req: Request,
