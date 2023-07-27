@@ -12,14 +12,14 @@ Manage user's eductational background
      - [x] Database migration - manual✅, TypeORM
    - [ ] Caching - Redis
    - [ ] Queuing - Bull + Redis
-   - [ ] Validation - Joi or Class validator
+   - [x] Validation - Joi or Class validator
    - [x] Authentication - Passport.js
 - [x] User registration
 - [x] User authentication
-- [ ] Add education history
+- [x] Add education history
 - [ ] List names of schools attended
-- [ ] List education history
-- [ ] View history details
-- [ ] Update history
-- [ ] Delete history
+- [x] List education history
+- [x] View history details
+- [x] Update history
+- [x] Delete history
 - [ ] Deploy to AWS
