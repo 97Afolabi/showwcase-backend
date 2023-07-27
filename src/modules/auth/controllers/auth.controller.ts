@@ -17,7 +17,13 @@ export class AuthController implements IAuthController {
       return res.status(400).json({ message: "User registration failed" });
     }
   }
-  login(req: Request, res: Response): void {
-    throw new Error("Method not implemented.");
+
+  @httpPost("/login")
+  async login(req: Request, res: Response): Promise<any> {
+    try {
+      return await this.authService.login(req, res);
+    } catch (error) {
+      console.log("Method not implemented.");
+    }
   }
 }

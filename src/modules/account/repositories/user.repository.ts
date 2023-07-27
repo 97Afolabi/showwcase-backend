@@ -18,4 +18,16 @@ export default class UserRepository extends BaseRepository {
       throw new Error(error);
     }
   }
+
+  async findById(id: string) {
+    try {
+      return await this.findOne(
+        `SELECT id, username, created_at FROM "user" WHERE id = $1`,
+        [id]
+      );
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  }
 }

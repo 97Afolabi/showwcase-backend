@@ -3,6 +3,7 @@ import { inject, injectable } from "inversify";
 import * as bcrypt from "bcrypt";
 import { IAuthService } from "../../../interfaces/auth.interface";
 import UserRepository from "../../account/repositories/user.repository";
+import { generateJwtToken } from "../../../config/passport.config";
 
 @injectable()
 export default class AuthService implements IAuthService {
@@ -21,10 +22,34 @@ export default class AuthService implements IAuthService {
       return res.status(400).json({ message: "User registration failed" });
     }
   }
-  login(req: Request, res: Response): void {
-    throw new Error("Method not implemented.");
+  async login(req: Request, res: Response) {
+    try {
+      const { username, password } = req.body;
+      const user: { id: string; username: string; password: string } =
+        await this.userRepository.findOne(
+          `SELECT id, username, password FROM public.user WHERE username = $1`,
+          [username]
+        );
+
+      const validPassword = await bcrypt.compare(password, user.password);
+
+      if (!validPassword) {
+        return res.status(400).json({ message: "Invalid credentials" });
+      }
+      const token = generateJwtToken({ sub: user.id });
+      return {
+        username: user.username,
+        token,
+      };
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
   }
-  findById(id: string) {
-    throw new Error("Method not implemented.");
+
+  async findById(id: string) {
+    try {
+      return await this.userRepository.findById(id);
+    } catch (error) {}
   }
 }
