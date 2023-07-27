@@ -15,6 +15,24 @@ export function UserAuth(req: Request, res: Response, next: NextFunction) {
   validateRequestBody(schema, req, res, next);
 }
 
+export function ValidateEducation(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const schema = Joi.object({
+    school: Joi.string().required(),
+    degree: Joi.string().required(),
+    field: Joi.string().required(),
+    start_date: Joi.date().required(),
+    end_date: Joi.date().optional(),
+    grade: Joi.number().required(),
+    description: Joi.string().required(),
+  });
+
+  validateRequestBody(schema, req, res, next);
+}
+
 function validateRequestBody(
   schema,
   req: Request,
