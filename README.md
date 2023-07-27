@@ -14,7 +14,7 @@ Manage user's eductational background
    - [ ] Queuing - Bull + Redis
    - [ ] Validation - Joi or Class validator
    - [ ] Authentication - Passport.js
-- [ ] User registration
+- [x] User registration
 - [ ] User authentication
 - [ ] Add education history
 - [ ] List names of schools attended

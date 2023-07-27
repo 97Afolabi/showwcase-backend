@@ -1,16 +1,22 @@
 import "dotenv/config";
 import "reflect-metadata";
-import { InversifyExpressServer } from "inversify-express-utils";
-import container from "./config/inversify.config";
+import * as express from "express";
 import { Request, Response, NextFunction } from "express";
-import * as bodyparser from "body-parser";
+import { InversifyExpressServer, getRouteInfo } from "inversify-express-utils";
+import * as passport from "passport";
+import * as prettyjson from "prettyjson";
+import container from "./config/inversify.config";
 import logger from "./config/logger";
+import { setupPassport } from "./config/passport.config";
 
 const server = new InversifyExpressServer(container);
 
 server.setConfig((app) => {
-  app.use(bodyparser.urlencoded({ extended: true }));
-  app.use(bodyparser.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
+
+  app.use(passport.initialize());
+  setupPassport(container);
 
   // Logging with Winston
   app.use((req: Request, res: Response, next: NextFunction) => {
@@ -21,8 +27,11 @@ server.setConfig((app) => {
 
 const app = server.build();
 
+const routeInfo = getRouteInfo(container);
+
 // Start the server
 const port = process.env.PORT;
 app.listen(port, () => {
-  logger.info(`Listening on port: ${port}`);
+  logger.warn(`Listening on port: ${port}`);
+  logger.info(prettyjson.render({ routes: routeInfo }));
 });

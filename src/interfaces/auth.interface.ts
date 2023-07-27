@@ -17,4 +17,5 @@ export interface IAuthController {
 export interface IAuthService {
   register(req: Request, res: Response): void;
   login(req: Request, res: Response): void;
+  findById(id: string);
 }

@@ -1,31 +1,23 @@
-import { controller, httpPost } from "inversify-express-utils";
-import { inject } from "inversify";
-import {
-  IAuthController,
-  IAuthService,
-} from "../../../interfaces/auth.interface";
 import { Request, Response } from "express";
+import { inject } from "inversify";
+import { controller, httpPost } from "inversify-express-utils";
 import { TYPES } from "../../../config/types";
+import { IAuthController } from "../../../interfaces/auth.interface";
+import AuthService from "../services/auth.service";
 
 @controller("/auth")
 export class AuthController implements IAuthController {
-  constructor(@inject(TYPES.AuthService) private authService: IAuthService) {}
+  constructor(@inject(TYPES.AuthService) private authService: AuthService) {}
 
   @httpPost("/register")
   async register(req: Request, res: Response): Promise<any> {
     try {
-      return await res.status(200).json({ data: req.body });
+      return await this.authService.register(req, res);
     } catch (error) {
-      console.log("Method not implemented.");
+      return res.status(400).json({ message: "User registration failed" });
     }
   }
-
-  @httpPost("/login")
-  async login(req: Request, res: Response): Promise<any> {
-    try {
-      return await this.authService.login(req, res);
-    } catch (error) {
-      console.log("Method not implemented.");
-    }
+  login(req: Request, res: Response): void {
+    throw new Error("Method not implemented.");
   }
 }
