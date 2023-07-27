@@ -8,6 +8,8 @@ import * as prettyjson from "prettyjson";
 import container from "./config/inversify.config";
 import logger from "./config/logger";
 import { setupPassport } from "./config/passport.config";
+import "./config/validate-env";
+import envVars from "./config/validate-env";
 
 const server = new InversifyExpressServer(container);
 
@@ -30,7 +32,7 @@ const app = server.build();
 const routeInfo = getRouteInfo(container);
 
 // Start the server
-const port = process.env.PORT;
+const port = envVars.PORT;
 app.listen(port, () => {
   logger.warn(`Listening on port: ${port}`);
   logger.info(prettyjson.render({ routes: routeInfo }));

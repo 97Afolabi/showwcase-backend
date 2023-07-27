@@ -1,6 +1,7 @@
 import { Container } from "inversify";
 import * as jwt from "jsonwebtoken";
 import * as passport from "passport";
+import envVars from "./validate-env";
 import {
   Strategy as JwtStrategy,
   ExtractJwt,
@@ -9,8 +10,8 @@ import {
 import { TYPES } from "./types";
 import AuthService from "../modules/auth/services/auth.service";
 
-const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_EXPIRES = process.env.JWT_EXPIRES;
+const JWT_SECRET = envVars.JWT_SECRET;
+const JWT_EXPIRES = envVars.JWT_EXPIRES;
 
 export function setupPassport(container: Container): void {
   const userService = container.get<AuthService>(TYPES.AuthService);

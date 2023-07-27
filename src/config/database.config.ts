@@ -1,11 +1,12 @@
 import { Pool } from "pg";
+import envVars from "./validate-env";
 
 const dbConfig = new Pool({
-  host: process.env.POSTGRES_HOST,
-  port: parseInt(process.env.POSTGRES_PORT),
-  database: process.env.POSTGRES_DB,
-  user: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
+  host: envVars.POSTGRES_HOST,
+  port: parseInt(envVars.POSTGRES_PORT),
+  database: envVars.POSTGRES_DB,
+  user: envVars.POSTGRES_USER,
+  password: envVars.POSTGRES_PASSWORD,
   max: 20,
 });
 

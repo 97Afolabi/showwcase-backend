@@ -1,4 +1,5 @@
 import * as winston from "winston";
+import envVars from "./validate-env";
 
 const logger = winston.createLogger({
   format: winston.format.combine(
@@ -13,7 +14,7 @@ const logger = winston.createLogger({
   transports: [],
 });
 
-if (process.env.NODE_ENV !== "production") {
+if (envVars.NODE_ENV !== "production") {
   // don't log to console in production
   logger.add(new winston.transports.Console());
 }
