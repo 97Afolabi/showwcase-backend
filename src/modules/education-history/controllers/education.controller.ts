@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { controller, httpPost } from "inversify-express-utils";
+import { controller, httpGet, httpPost } from "inversify-express-utils";
 import { inject } from "inversify";
 import * as passport from "passport";
 import { TYPES } from "../../../config/types";
@@ -30,5 +30,15 @@ export class EducationController {
     return res
       .status(200)
       .json({ message: "Education history saved successfully" });
+  }
+
+  @httpGet("/")
+  async findAll(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    const data = await this.educationService.findAll(req["user"].id);
+    return res.status(200).json({ message: "Education history", data });
   }
 }

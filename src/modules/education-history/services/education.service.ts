@@ -20,4 +20,11 @@ export default class EducationService {
       console.error(error);
     }
   }
+  async findAll(userId: string): Promise<IEducation[]> {
+    try {
+      return await this.educationRepository.findAll(userId);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

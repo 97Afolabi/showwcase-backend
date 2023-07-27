@@ -38,4 +38,23 @@ export default class EducationRepository extends BaseRepository {
       throw new Error(error);
     }
   }
+
+  async findAll(userId: string): Promise<IEducation[]> {
+    try {
+      return await this.find(
+        `SELECT
+          id, school, degree, field, start_date, end_date, grade, description, created_at, updated_at
+        FROM
+          public.education
+        WHERE
+          user_id = $1
+        ORDER BY
+          created_at DESC;`,
+        [userId]
+      );
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
+  }
 }
