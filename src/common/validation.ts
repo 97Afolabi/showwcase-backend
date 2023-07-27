@@ -12,7 +12,7 @@ export function UserAuth(req: Request, res: Response, next: NextFunction) {
     password: Joi.string().min(10).required(),
   });
 
-  validateRequestBody(schema, req, res, next);
+  validateRequest(schema, req, res, next);
 }
 
 export function ValidateEducation(
@@ -30,7 +30,7 @@ export function ValidateEducation(
     description: Joi.string().required(),
   });
 
-  validateRequestBody(schema, req, res, next);
+  validateRequest(schema, req, res, next);
 }
 
 export function ValidateUuid(req: Request, res: Response, next: NextFunction) {
@@ -38,17 +38,29 @@ export function ValidateUuid(req: Request, res: Response, next: NextFunction) {
     id: Joi.string().uuid().required(),
   });
 
-  validateRequestBody(schema, req, res, next, "params");
+  validateRequest(schema, req, res, next, "params");
 }
 
-function validateRequestBody(
+function validateRequest(
   schema,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
+  inputType?: "params" | "query"
 ) {
-  const { error } = schema.validate(req.body, { abortEarly: false });
+  let validateSchema;
+  switch (inputType) {
+    case "params":
+      validateSchema = schema.validate(req.params, { abortEarly: false });
+      break;
+    case "query":
+      validateSchema = schema.validate(req.query, { abortEarly: false });
+    default:
+      validateSchema = schema.validate(req.body, { abortEarly: false });
+      break;
+  }
 
+  const error = validateSchema.error;
   if (error) {
     const validationErrors: ValidationError[] = error.details.map((detail) => ({
       field: detail.path.join("."),
