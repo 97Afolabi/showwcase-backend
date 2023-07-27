@@ -1,6 +1,8 @@
 import "dotenv/config";
 import "reflect-metadata";
 import * as express from "express";
+import * as cors from "cors";
+import helmet from "helmet";
 import { Request, Response, NextFunction } from "express";
 import { InversifyExpressServer, getRouteInfo } from "inversify-express-utils";
 import * as passport from "passport";
@@ -14,6 +16,9 @@ import envVars from "./config/validate-env";
 const server = new InversifyExpressServer(container);
 
 server.setConfig((app) => {
+  app.use(cors());
+  app.use(helmet());
+
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
